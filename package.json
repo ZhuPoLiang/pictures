@@ -1,0 +1,41 @@
+{
+  "name": "nabm",
+  "version": "1.0.0",
+  "description": "全栈开发的小例子",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZhuPoLiang/nabm.git"
+  },
+  "keywords": [
+    "node",
+    "ng",
+    "bootstrap",
+    "mongodb"
+  ],
+  "author": "zhupoliang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ZhuPoLiang/nabm/issues"
+  },
+  "homepage": "https://github.com/ZhuPoLiang/nabm#readme",
+  "dependencies": {
+    "bcrypt": "^0.8.5",
+    "body-parser": "^1.13.3",
+    "cheerio": "^0.19.0",
+    "connect-multiparty": "^2.0.0",
+    "cookie-parser": "^1.3.5",
+    "crypto": "0.0.3",
+    "debug": "~2.2.0",
+    "ejs": "~2.3.3",
+    "express": "~4.13.1",
+    "express-session": "^1.11.3",
+    "moment": "^2.10.6",
+    "morgan": "^1.6.1",
+    "serve-favicon": "~2.3.0",
+    "serve-static": "^1.10.0"
+  }
+}
