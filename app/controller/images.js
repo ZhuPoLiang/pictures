@@ -1,23 +1,29 @@
-// var DM = {
-// 		http : require('http'),
-// 		https : require('https'),
-// 	}, 
-// 	urlStr = 'http://www.wookmark.com/api/json/popular';
+var http = require('http'),
+	express = require('express'),
+	router = express.Router(),
+	urlStr = 'http://www.wookmark.com/api/json/popular?page=';
 
-// DM.http.get(urlStr, function (res) {
+router.get('/list/:id', function(req, res) {
 
-// 	var image_list = [],
-// 		image_num = 0;
+	var _res = res,
+		page_num = req.params.id;
 
-// 	res.on('data', function (data) {
-// 		image_list.push(data);
-// 		image_num += data.length;
-// 	});
+	http.get(urlStr + page_num, function (res) {
 
-// 	res.on('end', function () {
-// 		console.log(image_list.toString('utf-8'))
-// 	});
+		var image_list = '';
 
-// }).on('error', function () {
-// 	console.log('爬取数据失败')
-// });
+		res.on('data', function (data) {
+			image_list += data.toString('utf-8');
+		});
+
+		res.on('end', function () {
+			_res.json(image_list);
+		});
+
+	}).on('error', function () {
+		console.log('爬取数据失败')
+	});
+
+});
+
+module.exports = router;

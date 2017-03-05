@@ -3,53 +3,69 @@
 <head>
 	<meta charset="UTF-8">
 	<title><%= title %></title>
+	<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../public/stylesheets/style.css">
 </head>
 <body>
-	<h1><%= h1 %></h1>
-	<form>
-		<input type="text" name="name" />
-		<input type="password" name="password" />
-		<input type="email" name="email" />
-		<button type="submit">提交</button>
-		<a href="/users/login">登陆</a>
-	</form>
+	<div class="container">
+		<form class="form-signin">
+			<h2 class="form-signin-heading text-center"><%= h1 %></h2>
+			<label for="inputUserName" class="sr-only">用户名</label>
+			<input type="text" name="name" id="inputUserName" class="form-control" placeholder="用户名" required="" autofocus="">
+			<label for="inputPassword" class="sr-only">密码</label>
+			<input type="password" name="password" id="inputPassword" class="form-control" placeholder="密码" required="">
+			<label for="inputEmail" class="sr-only">邮箱地址</label>
+			<input type="email" name="email" id="inputEmail" class="form-control" placeholder="邮箱地址" required="">
+			<div class="checkbox text-right">
+				<a href="/users/login">用户登录</a>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+		</form>
+		<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+				...
+				</div>
+			</div>
+		</div>
+	<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../public/javascripts/common.js"></script>
+	<script>
+		$('form').on('submit', function () {
+
+			var serialize_arr = $(this).serializeArray(),
+				serialize_obj = DM.Common.convertArray(serialize_arr);
+
+			var $ajax = $.ajax({
+				url : '/users/reg',
+				type : 'POST',
+				dataType : 'json',
+				data : serialize_obj
+			});
+
+			$ajax.done(function (data) {
+				switch (data.result) {
+					case -1 :
+						alert('注册成功');
+						break;
+					case -2 :
+						alert('账户已存在');
+						break;
+					case -3 :
+						alert('邮箱已存在');
+						break;
+					case -6 :
+						alert('服务器错误');
+						break;
+				};
+			});
+
+			$ajax.fail(function () {
+				console.log('保存失败');
+			});
+
+			return false;
+		});
+	</script>
 </body>
-<script src="../public/lib/jquery/dist/jquery.min.js"></script>
-<script src="../public/javascripts/common.js"></script>
-<script>
-	$('form').on('submit', function () {	
-
-		var serialize_arr = $(this).serializeArray(),
-			serialize_obj = DM.Common.convertArray(serialize_arr);
-
-		var $ajax = $.ajax({
-			url : '/users/reg',
-			type : 'POST',
-			dataType : 'json',
-			data : serialize_obj
-		});
-
-		$ajax.done(function (data) {
-
-			switch (data.result) {
-				case -1 :
-					alert('保存成功');
-					break;
-				case -2 :
-					alert('账户已存在');
-					break;
-				case -5 :
-					alert('服务器错误');
-					break;
-			};
-			
-		});
-
-		$ajax.fail(function () {
-			console.log('保存失败');
-		});
-
-		return false;
-	});
-</script>
 </html>

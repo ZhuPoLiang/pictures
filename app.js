@@ -25,16 +25,16 @@ app.engine('.html',require('ejs').__express); //要是用html作为模板就需�
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 
 //解析请求体的json数据
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 //解析form表单的中间件
 app.use(bodyParser.urlencoded({
     extended: false
-})); 
+}));
 //cookie中间件
 app.use(cookieParser());
 
-//设置session
-app.use(session({ 
+// 设置session
+app.use(session({
     secret: 'zhu',
     store: new mongoStore({
         url: serverAction,
@@ -51,7 +51,7 @@ require('./app/routes/routes')(app);
 app.use(serveStatic(path.join(__dirname, '/')));
 
 //一个对时间各种处理的中间模块
-app.locals.moment = require('moment'); 
+app.locals.moment = require('moment');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,8 +1,83 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  color: #505050;
+  background-color: #ebebeb;
 }
 
-a {
-  color: #00B7FF;
+.navbar-default {
+    border-bottom: 2px solid #e1e1e1;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input {
+  margin-bottom: 10px;
+}
+
+/* ---------------------------- */
+
+#content {
+    padding-top: 63px;
+}
+#content .images {
+    position: relative;
+    width: 100%;
+}
+#content .item {
+    display: none;
+    position: absolute;
+    width: 232px;
+    background-color: #fff;
+}
+#content .item img.imageLoading {
+    opacity: 0;
+    -webkit-transition: opacity 0.25s ease-out;
+    transition: opacity 0.25s ease-out;
+}
+#content .item img.imageLoaded {
+    opacity: 1;
+}
+#loader {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width:100%;
+    height:95px;
+    background-color:#FFF;
+    text-align: center;
+}
+
+/* ---------------------------- */
+
+#login-tip {
+    padding-top: 120px;
+}
+#login-tip h1 {
+    color: #333;
+    font-size: 48px;
+    text-shadow: -5px 5px 0 rgba(0,0,0,0.1);
 }

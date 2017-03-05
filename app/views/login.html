@@ -3,19 +3,28 @@
 <head>
 	<meta charset="UTF-8">
 	<title><%= title %></title>
+	<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../public/stylesheets/style.css">
 </head>
 <body>
-	<h1><%= h1 %></h1>
-	<form>
-		<input type="text" name="name" />
-		<input type="password" name="password" />
-		<button type="submit">登陆</button>
-	</form>
+	<div class="container">
+		<form class="form-signin">
+			<h2 class="form-signin-heading text-center"><%= h1 %></h2>
+			<label for="inputUserName" class="sr-only">用户名</label>
+			<input type="text" name="name" id="inputUserName" class="form-control" placeholder="用户名" required="" autofocus="">
+			<label for="inputPassword" class="sr-only">密码</label>
+			<input type="password" name="password" id="inputPassword" class="form-control" placeholder="密码" required="">
+			<div class="checkbox text-right">
+				<a href="/users/reg">注册账户</a>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+		</form>
+	</div>
 </body>
-<script src="../public/lib/jquery/dist/jquery.min.js"></script>
+<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
 <script src="../public/javascripts/common.js"></script>
 <script>
-	$('form').on('submit', function () {	
+	$('form').on('submit', function () {
 
 		var serialize_arr = $(this).serializeArray(),
 			serialize_obj = DM.Common.convertArray(serialize_arr);
@@ -28,19 +37,21 @@
 		});
 
 		$ajax.done(function (data) {
-
 			switch (data.result) {
+				case -1 :
+					alert('登录成功');
+					window.location.href = '/';
+					break;
 				case -4 :
 					alert('账户不存在');
 					break;
-				case -5 :
+				case -6 :
 					alert('服务器错误');
 					break;
-				case -6 :
+				case -7 :
 					alert('密码错误');
 					break;
 			};
-			
 		});
 
 		$ajax.fail(function (err) {

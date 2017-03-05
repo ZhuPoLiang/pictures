@@ -1,28 +1,20 @@
-var Index = require('./index'),
-	Users = require('./users'),
-	Reptile = require('./reptile');
-	Images = require('./images');
+var Index = require('../controller/index'),
+    Users = require('../controller/users');
 
-module.exports = function(app) {
+var proxy = require('express-http-proxy'),
+    urlStr = 'http://www.wookmark.com';
 
-	app.use(function(req, res, next) {
-		
-		//var _user = req.session.user;
+module.exports = function (app) {
+    app.use(function (req, res, next) {
+        var oUserAgent = req.headers['user-agent'].toLowerCase(),
+            isMSIE = oUserAgent.match(/(msie\s|trident\/)(\d.+)/);
 
-		//判断是否低于ie10
-		var oUserAgent = req.headers['user-agent'].toLowerCase(),
-	        oMSIE = oUserAgent.match(/msie ([\d.]+)/),
-	        oVersion = oMSIE ? parseInt(oMSIE[1],10) : null;
-	    
-	    if (oMSIE && oVersion < 10) {
-	        return res.render('errorIE',{title : ' 友情提示', tip : '您的浏览器版本过低！'});
-	    }
+        if (isMSIE) {
+            return res.render('caveat', {title : '友情提示', content : 'Oh My God！！您还在用IE？'});
+        }
 
-		//app.locals.user = _user;
-
-		next();
-
-	});
+        next();
+    });
 
 	// index
 	app.use('/', Index);
@@ -31,8 +23,9 @@ module.exports = function(app) {
 	app.use('/users', Users);
 
 	// 跨域图片接口数据
-	app.use('/images', Images);
-	
-	// 爬虫数据
-	app.use('/reptile', Reptile);
+	app.use('/images', proxy(urlStr, {
+        forwardPath: function(req, res) {
+            return '/api/json' + require('url').parse(req.url).path;
+        }
+    }));
 };
